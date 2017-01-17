@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
 const photoSchema = mongoose.Schema({
-  title: {type: String},
-  imageOriginal: {type: String, required: true, unique: true },
-  imageBig: {type: String, required: true, unique: true},
-  imageSmall: {type: String, required: true, unique: true},
+  title: {type: String },
+  imageOriginal: {type: String, required: true },
+  imageBig: {type: String, required: true },
+  imageSmall: {type: String, required: true },
   locationName: {type: String, required: true},
-  lng: {type: Number, required: true},
+  lng: {type: Number, required: true, unique: true},
   lat: {type: Number, required: true},
-  createdAt: {type: String, required: true},
+  createdAt: {type: String, required: true },
   uploader: {type: String, required: true, trim: true},
   uploaderPic: {type: String},
   portfolioUrl: {type: String }

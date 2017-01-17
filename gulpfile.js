@@ -52,7 +52,7 @@ gulp.task('serve', ['es6', 'sass'], () => {
 });
 
 gulp.task('default', ['sass', 'es6', 'images', 'fonts', 'serve'], () => {
-  gulp.watch('src/scss/**/*.src', ['sass']);
+  gulp.watch('src/scss/**/*.scss', ['sass']);
   gulp.watch('src/js/*.js', ['es6']);
   gulp.watch('src/images/**/*.{png,jpg,jpeg,gif,ico}', ['images']);
   gulp.watch('src/fonts/**/*.{eot,svg,ttf,woff,woff2}', ['fonts']);
