@@ -151,7 +151,12 @@ Transit.mainMap = function(e){
     $.each(data, (index, photo) => {
       setTimeout(() => {
         const latlng = new google.maps.LatLng(photo.lat, photo.lng);
-        const marker = new google.maps.Marker({ position: latlng, map: this.map, animation: google.maps.Animation.BOUNCE});
+        const marker = new google.maps.Marker({
+          position: latlng,
+          map: this.map,
+          animation: google.maps.Animation.BOUNCE,
+          icon: '../images/gbm.png'
+        });
         google.maps.event.addListener(marker, 'click', () => {
           this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -189,7 +194,12 @@ Transit.morePics = function() {
     $.each(data, (index, photo) => {
       setTimeout(() => {
         const latlng = new google.maps.LatLng(photo.lat, photo.lng);
-        const marker = new google.maps.Marker({ position: latlng, map: this.map, animation: google.maps.Animation.BOUNCE});
+        const marker = new google.maps.Marker({
+          position: latlng,
+          map: this.map,
+          animation: google.maps.Animation.BOUNCE,
+          icon: '../images/gbm.png'
+        });
         google.maps.event.addListener(marker, 'click', () => {
           this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
