@@ -1,10 +1,110 @@
-#map-container{
-  height: 500px;
-  width: 910px;
+body{
+  background: #FFF;
+  // text-align: center;
+  font-family: 'Space Mono', monospace;
+  text-align: center;
+  text-transform: lowercase;
 }
 
+.navbar{
+  background-color: rgba(200,200,200,1);
+  text-align: center;
+}
+// .navbar-light .navbar-brand {
+//   color:red;
+// }
+
+#homeHeader{
+  font-family: 'Space Mono', monospace;
+  font-size:1rem;
+  color:black;
+  padding:10px;
+  text-align:left;
+  margin-top:20px;
+  width:50%;
+  margin:0 auto;
+  border-left: 1px solid rgba(0,0,0,.15);
+  line-height:1.25;
+  margin-top:15px;
+}
+.navbar-light .navbar-nav .nav-link{
+    color:white;
+    position:relative;
+    margin:0,10px,0,0;
+}
+form{
+  width:50%;
+  margin:0 auto;
+  text-align: left;
+  text-transform: lowercase;
+
+}
+.form-control{
+  border-radius:0;
+  border-right:none;
+  border-top:none;
+  // border-left:none;
+  border-bottom:none;
+  width:50%;
+  margin-top: 15px;
+}
+.form-control:focus {
+  border: 1px solid rgba(0,0,0,.15);
+  border-right:none;
+  border-top:none;
+  border-bottom:none;
+}
+#registerButton{
+  background:none;
+  color:black;
+  border:none;
+  text-transform: lowercase;
+}
+#registerButton:focus{
+outline:none;
+}
+#loginButton{
+  background:none;
+  color:black;
+  border:none;
+  text-transform: lowercase;
+}
+#loginButton:focus{
+outline:none;
+}
+#map-container{
+width:910px;
+height:550px;
+}
 .info-window img {
   margin:0;
-  height:90%;
-  width:90%;
+  height:100%;
+  width:100%;
+}
+.btn-secondary{
+  background:none;
+  color:black;
+  border:none;
+  text-transform: lowercase;
+}
+.btn-secondary:focus{
+outline:none;
+background-color: white;
+}
+.btn-secondary:active{
+  outline:none;
+  background-color: white;
+}
+.btn-secondary:after{
+  outline:none;
+  background-color: white;
+}
+.btn-secondary:before{
+  outline:none;
+  background-color: white;
+}
+.btn-secondary:hover {
+  outline:none;
+  background-color:white;
+  border-color:white;
 }

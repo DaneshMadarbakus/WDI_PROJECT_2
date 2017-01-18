@@ -6,14 +6,14 @@ const google = google;
 Transit.init = function(){
   this.apiUrl = 'http://localhost:3000/api';
   this.$main = $('main');
-  // $('.globalPhotos').on('click', this.globalPhotos.bind(this));
+  $('.globalPhotos').on('click', this.globalPhotos.bind(this));
   $('.mainMap').on('click', this.mainMap.bind(this));
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
   $('.logout').on('click', this.logout.bind(this));
   this.$main.on('submit', 'form', this.handleForm);
-  this.$main.on('click', '.newPics', this.mainMap.bind(this));
-  this.$main.on('click', '.morePics', this.morePics.bind(this));
+  $('.newPics').on('click', this.mainMap.bind(this));
+  $('.morePics').on('click', this.morePics.bind(this));
 
   if (this.getToken()) {
     this.loggedInState();
@@ -33,27 +33,34 @@ Transit.loggedInState = function() {
 Transit.loggedOutState = function() {
   $('.loggedOut').show();
   $('.loggedIn').hide();
-  this.register();
+  this.globalPhotos();
+};
+
+Transit.globalPhotos = function(e) {
+  if (e) e.preventDefault();
+  this.$main.html(`
+    <h1 id="homeHeader">photos from across the globe</h1>
+    `);
 };
 
 Transit.register = function(e) {
   if (e) e.preventDefault();
   this.$main.html(`
-    <h2>Register</h2>
+    <h2></h2>
     <form method="post" action="/register">
       <div class="form-group">
-        <input class="form-control" type="text" name="user[username]" placeholder="Username">
+        <input class="form-control" type="text" name="user[username]" placeholder="username">
       </div>
       <div class="form-group">
-        <input class="form-control" type="email" name="user[email]" placeholder="Email">
+        <input class="form-control" type="email" name="user[email]" placeholder="e-mail">
       </div>
       <div class="form-group">
-        <input class="form-control" type="password" name="user[password]" placeholder="Password">
+        <input class="form-control" type="password" name="user[password]" placeholder="password">
       </div>
       <div class="form-group">
-        <input class="form-control" type="password" name="user[passwordConfirmation]" placeholder="Password Confirmation">
+        <input class="form-control" type="password" name="user[passwordConfirmation]" placeholder="password confirmation">
       </div>
-      <input class="btn btn-primary" type="submit" value="Register">
+      <input class="btn btn-primary" type="submit" id="registerButton" value="Register">
     </form>
   `);
 };
@@ -61,15 +68,15 @@ Transit.register = function(e) {
 Transit.login = function(e){
   if (e) e.preventDefault();
   this.$main.html(`
-    <h2>Login</h2>
+    <h2></h2>
     <form method="post" action="/login">
       <div class="form-group">
-        <input class="form-control" type="email" name="email" placeholder="Email">
+        <input class="form-control" type="email" name="email" placeholder="e-mail">
       </div>
       <div class="form-group">
-        <input class="form-control" type="password" name="password" placeholder="Password">
+        <input class="form-control" type="password" name="password" placeholder="password">
       </div>
-      <input class="btn btn-primary" type="submit" value="Login">
+      <input class="btn btn-primary" type="submit" id="loginButton" value="Login">
     </form>
   `);
 };
@@ -79,32 +86,78 @@ Transit.mainMap = function(e){
   this.$main.html(`
     <div id="map-container">
     </div>
-    <button class='newPics'>New Pics</button>
-    <button class='morePics'>More Pics</button>
     `);
   const url = `${this.apiUrl}/photos`;
 
+  const mapStyles = [
+    {'featureType': 'all', 'elementType': 'labels', 'stylers': [{ 'visibility': 'off' }]},
+    {'featureType': 'administrative', 'elementType': 'geometry.stroke', 'stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative.country','elementType': 'geometry.stroke','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative.country','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative.country','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative.province','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative.province','elementType': 'labels.text','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative.locality','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative.neighborhood','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'administrative.land_parcel','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'landscape','elementType': 'geometry.fill','stylers': [{'color': '#c8c8c8'}]},
+    {'featureType': 'landscape','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'landscape.man_made','elementType': 'all','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'landscape.man_made','elementType': 'geometry','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'landscape.man_made','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'poi','elementType': 'all','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'poi.park', 'elementType': 'labels', 'stylers': [{'visibility': 'off'}]},
+    {'featureType': 'poi.place_of_worship','elementType': 'labels','stylers': [{ 'visibility': 'off' }]},
+    {'featureType': 'poi.place_of_worship','elementType': 'labels.icon','stylers': [ { 'visibility': 'off' }]},
+    {'featureType': 'poi.school','elementType': 'labels','stylers': [ { 'visibility': 'off' }]},
+    {'featureType': 'poi.school','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'poi.sports_complex','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'poi.sports_complex','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road','elementType': 'all','stylers': [{'saturation': -100},{'lightness': 45},
+    {'visibility': 'off'}]},
+    {'featureType': 'road','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road','elementType': 'labels.text','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road.highway','elementType': 'all','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road.highway','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road.highway','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road.highway.controlled_access','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road.arterial','elementType': 'all','stylers': [{'visibility': 'off' } ]},
+    { 'featureType': 'road.arterial', 'elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    { 'featureType': 'road.arterial','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road.local','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'road.local','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'transit.line','elementType': 'all','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'transit.line','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'transit.station','elementType': 'all','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'transit.station','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'transit.station.airport','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'transit.station.bus','elementType': 'labels','stylers': [{'visibility': 'off'}]},
+    {'featureType': 'transit.station.rail','elementType': 'labels', 'stylers': [{'visibility': 'off'}]},
+    {'featureType': 'water', 'elementType': 'all', 'stylers': [ { 'color': '#ffffff' }, {'visibility': 'on' }]},
+    {'featureType': 'water', 'elementType': 'geometry.fill', 'stylers': [ { 'color': '#ffffff'}]},
+    {'featureType': 'water', 'elementType': 'labels',  'stylers': [{ 'visibility': 'off'}]}];
   const canvas = document.getElementById('map-container');
   const mapOptions = {
     zoom: 2,
     center: new google.maps.LatLng(30, 0),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    styles: mapStyles
   };
   this.map = new google.maps.Map(canvas, mapOptions);
 
   return this.ajaxRequest(url, 'get', null, data => {
     $.each(data, (index, photo) => {
-      const latlng = new google.maps.LatLng(photo.lat, photo.lng);
-      const marker = new google.maps.Marker({ position: latlng, map: this.map});
-      google.maps.event.addListener(marker, 'click', () => {
-        this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      setTimeout(() => {
+        const latlng = new google.maps.LatLng(photo.lat, photo.lng);
+        const marker = new google.maps.Marker({ position: latlng, map: this.map, animation: google.maps.Animation.BOUNCE});
+        google.maps.event.addListener(marker, 'click', () => {
+          this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="locationModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
               </div>
               <div class="modal-body">
                   <div class = "info-window">
@@ -117,10 +170,14 @@ Transit.mainMap = function(e){
             </div>
           </div>
         </div>`);
-        $('#locationModalLabel').html(`${photo.locationName}`);
-        $('#photoImage').attr('src', `${photo.imageOriginal}`);
-        $('#infoModal').modal('show');
-      });
+          $('#locationModalLabel').html(`${photo.locationName}`);
+          $('#photoImage').attr('src', `${photo.imageOriginal}`);
+          $('#infoModal').modal('show');
+        });
+        setTimeout(() => {
+          marker.setAnimation(null);
+        }, 750);
+      }, index * 200);
     });
   });
 };
@@ -130,10 +187,11 @@ Transit.morePics = function() {
 
   return this.ajaxRequest(url, 'get', null, data => {
     $.each(data, (index, photo) => {
-      const latlng = new google.maps.LatLng(photo.lat, photo.lng);
-      const marker = new google.maps.Marker({ position: latlng, map: this.map});
-      google.maps.event.addListener(marker, 'click', () => {
-        this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      setTimeout(() => {
+        const latlng = new google.maps.LatLng(photo.lat, photo.lng);
+        const marker = new google.maps.Marker({ position: latlng, map: this.map, animation: google.maps.Animation.BOUNCE});
+        google.maps.event.addListener(marker, 'click', () => {
+          this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -153,10 +211,14 @@ Transit.morePics = function() {
             </div>
           </div>
         </div>`);
-        $('#locationModalLabel').html(`${photo.locationName}`);
-        $('#photoImage').attr('src', `${photo.imageOriginal}`);
-        $('#infoModal').modal('show');
-      });
+          $('#locationModalLabel').html(`${photo.locationName}`);
+          $('#photoImage').attr('src', `${photo.imageOriginal}`);
+          $('#infoModal').modal('show');
+        });
+        setTimeout(() => {
+          marker.setAnimation(null);
+        }, 750);
+      }, index * 200);
     });
   });
 };
