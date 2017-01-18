@@ -155,7 +155,7 @@ Transit.mainMap = function(e){
           position: latlng,
           map: this.map,
           animation: google.maps.Animation.BOUNCE,
-          icon: '../images/gbm.png'
+          icon: { url: '../images/gbm.png', scaledSize: new google.maps.Size(22,38)} 
         });
         google.maps.event.addListener(marker, 'click', () => {
           this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
