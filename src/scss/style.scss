@@ -81,6 +81,9 @@ height:550px;
   height:100%;
   width:100%;
 }
+.btn:focus{
+  outline:none;
+}
 .btn-secondary{
   background:none;
   color:black;
@@ -92,6 +95,10 @@ outline:none;
 background-color: white;
 }
 .btn-secondary:active{
+  outline:none;
+  background-color: white;
+}
+.btn-secondary:active:focus{
   outline:none;
   background-color: white;
 }
