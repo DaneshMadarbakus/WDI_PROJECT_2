@@ -155,7 +155,7 @@ Transit.mainMap = function(e){
           position: latlng,
           map: this.map,
           animation: google.maps.Animation.BOUNCE,
-          icon: { url: '../images/gbm.png', scaledSize: new google.maps.Size(22,38)} 
+          icon: { url: '../images/gbm.png', scaledSize: new google.maps.Size(22,38)}
         });
         google.maps.event.addListener(marker, 'click', () => {
           this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -198,7 +198,7 @@ Transit.morePics = function() {
           position: latlng,
           map: this.map,
           animation: google.maps.Animation.BOUNCE,
-          icon: '../images/gbm.png'
+          icon: { url: '../images/gbm.png', scaledSize: new google.maps.Size(22,38)}
         });
         google.maps.event.addListener(marker, 'click', () => {
           this.$main.append(`<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -206,9 +206,6 @@ Transit.morePics = function() {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="locationModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
               </div>
               <div class="modal-body">
                   <div class = "info-window">
