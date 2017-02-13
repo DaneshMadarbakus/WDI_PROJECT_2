@@ -1,4 +1,3 @@
-console.log('where ya need to go homie?');
 
 const Transit = Transit || {};
 const google = google;
