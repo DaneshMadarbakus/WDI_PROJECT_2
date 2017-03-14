@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const rp       = require('request-promise');
+const config   = require('../config/config');
 
-const databaseURL = process.env.MONGOLAB_URL || 'mongodb://localhost:27017/photos';
-mongoose.connect(databaseURL);
+mongoose.connect(config.db);
 
 const Photo = require('../models/photo');
 
