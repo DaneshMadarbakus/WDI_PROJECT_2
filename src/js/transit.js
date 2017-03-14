@@ -3,7 +3,7 @@ const Transit = Transit || {};
 const google = google;
 
 Transit.init = function(){
-  this.apiUrl = 'http://localhost:3000/api';
+  this.apiUrl = '/api';
   this.$main = $('main');
   $('.globalPhotos').on('click', this.globalPhotos.bind(this));
   $('.mainMap').on('click', this.mainMap.bind(this));
