@@ -4,7 +4,7 @@
   "description": "Project 2 with Google Maps",
   "main": "index.js",
   "scripts": {
-    "test": "gulp deploy"
+    "postinstall": "gulp deploy"
   },
   "repository": {
     "type": "git",
