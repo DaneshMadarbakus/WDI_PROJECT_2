@@ -3,6 +3,8 @@ Project 2 with Google Maps
 
 This is my second project from my Web Development Immersive course at General Assembly. The task was to build a fully functional web app using Google Maps and an external API to plot markers onto the map. I decided to use Unsplash.com's API to plot some of their high resolution pictures onto Google Maps relative to where the pictures were taken. 
 
+You can view the site here: [***Gloabl-photos***](https://global-photos.herokuapp.com/) 
+
 ![alt text](http://i.imgur.com/tSk1S4Z.png "global photos home page") 
 
 ![alt text](http://i.imgur.com/AYQMRvC.png.png "global photos register page") 
@@ -13,7 +15,7 @@ This is my second project from my Web Development Immersive course at General As
 
 To build the site I utilised HTML5, CSS, SCSS, Javascript, JQuery, nodeJs, Express, Bootstrap, Mongo. 
 
-###Approach to building the game
+###Approach to building the site
 
 I started by setting up the express app and building a small database using the external API as I was only able to make a limited number of requests to the external API every hour. I also set up authentications around my API.
 
